@@ -33,7 +33,7 @@ public class ClienteDAOImpl implements ClienteDAO {
             stmt.executeUpdate();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

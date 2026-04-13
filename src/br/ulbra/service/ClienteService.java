@@ -31,17 +31,15 @@ public class ClienteService {
         if (cliente.getCpf() == null || cliente.getCpf().isEmpty()) {
             throw new RuntimeException("CPF obrigatório");
         }
-        // Validação de CPF
+      
         if (!isCPFValido(cliente.getCpf())) {
             throw new RuntimeException("CPF inválido");
         }
 
-        // Validação de data no padrão BR
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate data = LocalDate.parse(cliente.getDatanasc(), formatter);
 
-            // exemplo: não permitir data futura
             if (data.isAfter(LocalDate.now())) {
                 throw new RuntimeException("Data de nascimento inválida");
             }
@@ -49,6 +47,7 @@ public class ClienteService {
         } catch (DateTimeParseException e) {
             throw new RuntimeException("Data deve estar no formato dd/MM/yyyy");
         }
+        dao.salvar(cliente);
     }
 
     public List<Cliente> listar() {
